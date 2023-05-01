@@ -4,3 +4,17 @@ spring:
     username: root
     password: demo@123
     driverClassName: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: "classpath:com.sms.core.repository/*.xml"
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+#    java:
+#      sql: DEBUG
+#    org:
+#      mybatis: DEBUG
+#      apache:
+#        ibatis: DEBUG
+    com.sms.core.repository: DEBUG

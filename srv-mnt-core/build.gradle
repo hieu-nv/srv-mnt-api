@@ -1,19 +1,43 @@
+buildscript {
+  dependencies {
+    classpath "org.flywaydb:flyway-core:9.8.1"
+    classpath 'org.flywaydb:flyway-mysql:9.17.0'
+  }
+}
+
 plugins {
-    id 'java'
+  id 'java'
+  id "org.flywaydb.flyway" version "9.8.1"
 }
 
 group 'com.sms'
 version '0.0.1-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
+  implementation 'com.mysql:mysql-connector-j:8.0.33'
+
+  compileOnly 'org.projectlombok:lombok:1.18.26'
+  annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
+}
+
+
+flyway {
+  url = 'jdbc:mysql://localhost:3306/srv-mnt?createDatabaseIfNotExist=true'
+  user = 'root'
+  password = 'demo@123'
+  schemas = ['srv-mnt']
+  cleanDisabled = false
+
 }
