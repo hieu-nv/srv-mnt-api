@@ -1,4 +1,31 @@
+server:
+  port: 8081
+
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          auth:
+            client-id: 'srv-mnt-api'
+            client-secret: 'X48SxHsglSBAOPZglg8AvRfNZVpuyvnc'
+            authorization-grant-type: 'authorization_code'
+            scope: 'openid'
+            issuer-uri: 'http://localhost:8080/realms/auth'
+            user-name-attribute: 'preferred_username'
+            redirect-uri: 'http://localhost:8081/login/oauth2/code/srv-mnt-api'
+        provider:
+          auth:
+            authorization-grant-type: 'authorization_code'
+            authorization-uri: 'http://localhost:8080/realms/auth/protocol/openid-connect/auth'
+            token-uri: 'http://localhost:8080/realms/auth/protocol/openid-connect/token'
+            user-info-uri: 'http://localhost:8080/realms/auth/protocol/openid-connect/userinfo'
+            user-name-attribute: 'sub'
+            jwk-set-uri: 'http://localhost:8080/realms/auth/protocol/openid-connect/certs'
+      resourceserver:
+        jwt:
+          issuer-uri: 'http://localhost:8080/realms/auth'
+          jwk-set-uri: 'http://localhost:8080/realms/auth/protocol/openid-connect/certs'
   datasource:
     url: jdbc:mysql://localhost:3306/srv-mnt?createDatabaseIfNotExist=true
     username: root
@@ -18,3 +45,5 @@ logging:
 #      apache:
 #        ibatis: DEBUG
     com.sms.core.repository: DEBUG
+
+

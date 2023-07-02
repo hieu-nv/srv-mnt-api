@@ -1,34 +1,45 @@
 plugins {
-  id 'java'
-//  id 'org.springframework.boot' version '3.0.6'
-//  id 'io.spring.dependency-management' version '1.1.0'
+  id 'io.spring.dependency-management' version '1.1.0'
 }
+allprojects {
+  group = 'com.sms'
+  version = '0.0.1-SNAPSHOT'
 
-group = 'com.sms'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+  apply plugin: 'java'
 
-configurations {
-  compileOnly {
-    extendsFrom annotationProcessor
+
+  repositories {
+    mavenCentral()
   }
 }
 
-repositories {
-  mavenCentral()
-}
+subprojects {
+  apply plugin: 'io.spring.dependency-management'
 
-dependencies {
-//  implementation 'org.springframework.boot:spring-boot-starter-security'
-//  implementation 'org.springframework.boot:spring-boot-starter-web'
-//  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
-  // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-//  implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
+  sourceCompatibility = '17'
 
-//  compileOnly 'org.projectlombok:lombok'
-//  annotationProcessor 'org.projectlombok:lombok'
-//  testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//  testImplementation 'org.springframework.security:spring-security-test'
+  configurations {
+    compileOnly {
+      extendsFrom annotationProcessor
+    }
+  }
+
+  dependencyManagement {
+    imports {
+      mavenBom 'org.springframework.boot:spring-boot-dependencies:3.1.0'
+
+    }
+
+    dependencies {
+      dependency 'org.projectlombok:lombok:1.18.28'
+      dependency 'com.fasterxml.jackson.core:jackson-annotations:2.15.0'
+      dependency 'org.yaml:snakeyaml:2.0'
+      dependency 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+      dependency 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+      dependency 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+      dependency 'com.mysql:mysql-connector-j:8.0.33'
+    }
+  }
 }
 
 tasks.named('test') {
